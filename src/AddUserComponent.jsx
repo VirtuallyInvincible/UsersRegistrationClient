@@ -11,7 +11,7 @@ class AddUserComponent extends React.Component {
   
     render() {
 		return (
-		// TODO: This div should be a form that validates the input fields. If not all fields have been entered, the request should
+		// TODO: This div should be a form that validates the input fields. If not all fields have been entered, the request should fail.
 		// TODO: If the ID entered already exists in the database, an error message should be displayed
 			<div>
 			  <input ref='id' type='text' placeholder='ID' />
@@ -35,11 +35,12 @@ class AddUserComponent extends React.Component {
 		var requestOptions = {
 		    method: 'POST',
 		    headers: { 'Content-Type': 'application/json' },
-		    body: JSON.stringify({'id': id, 'Name': name, 'Age': age, 'Job Title': jobTitle})
+		    body: JSON.stringify({'id': id, 'Name': name, 'Age': age, 'JobTitle': jobTitle})
 		};
 		fetch(`http://localhost:27017/user`, requestOptions)
 		    .catch(console.log);
 		
+		// TODO: Bug - when returning to the previous screen, the list does not get refreshed until F5 is pressed
 		this.props.finish();
     }
 }

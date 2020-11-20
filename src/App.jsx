@@ -11,7 +11,7 @@ class App extends React.Component {
 		super();
 		
 		this.state = {
-		    data: Constants.NO_DATA_TEXT,
+		    usersData: [],
 		    viewAddUserComponent: false
 		};
 		
@@ -23,6 +23,17 @@ class App extends React.Component {
     }
   
     render() {
+		const list = this.state.usersData.map((userData, index) => {
+			return (
+				<tr key={index}>
+				  <td>{userData.id}</td>
+				  <td>{userData.name}</td>
+				  <td>{userData.age}</td>
+				  <td>{userData.jobTitle}</td>
+				</tr>
+			)
+		});
+		
         return (
 			<div>
 			  <div>
@@ -31,7 +42,28 @@ class App extends React.Component {
 				  <button onClick={() => this.setViewAddUserComponent(true)}>Add New User</button>}
 			  </div>
 			  <div>
-				<label>{this.state.data}</label>
+			    <table>
+				  <thead>
+				    <tr>
+				      <th>
+					    ID
+					  </th>
+				      <th>
+					    Name
+					  </th>
+				      <th>
+					    Age
+					  </th>
+				      <th>
+					    Job Title
+					  </th>
+					</tr>
+				  </thead>
+				  <tbody>
+				    {list}
+				  </tbody>
+				</table>
+				<label>{Constants.NO_DATA_TEXT}</label>
 			  </div>
 			</div>
         );
@@ -51,8 +83,17 @@ class App extends React.Component {
 	}
 	
 	updateUsersData(newData) {
-		this.setState({ data: newData.length == 0 ? Constants.NO_DATA_TEXT : newData });
-		// TODO: Should be a dynamic list populated by the users with a delete button for each record to enable deletion.
+		console.log(newData);
+		let users = [];
+		newData.forEach(user => {
+                users.push({
+					id: user.id,
+					name: user.Name,
+					age: user.Age,
+					jobTitle: user.JobTitle
+				});
+            });
+		this.setState({ usersData: users });
 	}
 }
 export default App;
