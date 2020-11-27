@@ -40,7 +40,6 @@ class AddUserComponent extends React.Component {
 		fetch(`http://localhost:27017/user`, requestOptions)
 		    .catch(console.log);
 		
-		// TODO: Bug - when returning to the previous screen, the list does not get refreshed until F5 is pressed
 		this.props.finish();
     }
 }

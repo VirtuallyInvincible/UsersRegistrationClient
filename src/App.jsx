@@ -4,6 +4,8 @@ import Constants from './constants.js'
 
 
 // TODO: Moving to the cloud will help in scaling up the application as well as enabling remote clients (outside localhost) to send requests.
+// TODO: Add graphical design to the components.
+// TODO: Add ability to sort by clicking the headers. Add functionality for sorting to the API.
 
 
 class App extends React.Component {
@@ -18,6 +20,7 @@ class App extends React.Component {
 		this.setViewAddUserComponent = this.setViewAddUserComponent.bind(this);
 		this.refresh = this.refresh.bind(this);
 		this.updateUsersData = this.updateUsersData.bind(this);
+		this.delete = this.delete.bind(this);
 		
 		this.refresh();
     }
@@ -30,6 +33,9 @@ class App extends React.Component {
 				  <td>{userData.name}</td>
 				  <td>{userData.age}</td>
 				  <td>{userData.jobTitle}</td>
+				  <td>
+				    <button onClick={() => this.delete(userData.id)}>DELETE</button>
+				  </td>
 				</tr>
 			)
 		});
@@ -57,6 +63,8 @@ class App extends React.Component {
 				      <th>
 					    Job Title
 					  </th>
+					  <th>
+					  </th>
 					</tr>
 				  </thead>
 				  <tbody>
@@ -72,6 +80,7 @@ class App extends React.Component {
     setViewAddUserComponent(isVisible) {
 	    this.setState({ viewAddUserComponent: isVisible });
 	    if (!isVisible) {
+			console.log("Refreshing");
 		    this.refresh();
 	    }
     }
@@ -94,6 +103,18 @@ class App extends React.Component {
 				});
             });
 		this.setState({ usersData: users });
+	}
+	
+	delete(id) {
+		console.log(id);
+		var requestOptions = {
+		    method: 'DELETE',
+		    headers: { 'Content-Type': 'application/json' }
+		};
+		fetch(`http://localhost:27017/user/${id}`, requestOptions)
+			.then(this.refresh())
+		    .catch(console.log);
+		this.refresh();
 	}
 }
 export default App;
