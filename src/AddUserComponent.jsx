@@ -29,6 +29,13 @@ class AddUserComponent extends React.Component {
   
     add() {
 		var id = ReactDOM.findDOMNode(this.refs.id).value;
+		console.log("calling hasUsaer with id: " + id);
+		console.log(this.props.hasUser(id));
+		if (this.props.hasUser(id) == true) {
+			console.log("hasUser is true");
+			alert("A user with this ID already exists.")
+			return;
+		}
 		var name = ReactDOM.findDOMNode(this.refs.name).value;
 		var age = ReactDOM.findDOMNode(this.refs.age).value;
 		var jobTitle = ReactDOM.findDOMNode(this.refs.jobTitle).value;

@@ -3,6 +3,7 @@ import AddUserComponent from './AddUserComponent.jsx'
 import Constants from './constants.js'
 
 
+// TODO: Detected problems with library installations. Code may work well on my machine but not compile on another. Advice using an IDE to include all the necessary libraries.
 // TODO: Moving to the cloud will help in scaling up the application as well as enabling remote clients (outside localhost) to send requests.
 // TODO: Add graphical design to the components.
 // TODO: Add ability to sort by clicking the headers. Add functionality for sorting to the API.
@@ -44,7 +45,7 @@ class App extends React.Component {
 			<div>
 			  <div>
 				{this.state.viewAddUserComponent ? 
-				  <AddUserComponent finish={() => this.setViewAddUserComponent(false)} /> : 
+				  <AddUserComponent hasUser={(id) => this.hasUser(id)} finish={() => this.setViewAddUserComponent(false)} /> : 
 				  <button onClick={() => this.setViewAddUserComponent(true)}>Add New User</button>}
 			  </div>
 			  <div>
@@ -106,7 +107,6 @@ class App extends React.Component {
 	}
 	
 	delete(id) {
-		console.log(id);
 		var requestOptions = {
 		    method: 'DELETE',
 		    headers: { 'Content-Type': 'application/json' }
@@ -115,6 +115,12 @@ class App extends React.Component {
 			.then(this.refresh())
 		    .catch(console.log);
 		this.refresh();
+	}
+	
+	hasUser(id) {
+		console.log("hasUser called");
+		console.log(id);
+		return this.state.usersData.find(user => user['id'] === id) !== undefined;
 	}
 }
 export default App;
