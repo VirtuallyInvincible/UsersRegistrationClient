@@ -45,7 +45,7 @@ class App extends React.Component {
 			<div>
 			  <div>
 				{this.state.viewAddUserComponent ? 
-				  <AddUserComponent hasUser={(id) => this.hasUser(id)} finish={() => this.setViewAddUserComponent(false)} /> : 
+				  <AddUserComponent hasUser={(id) => this.hasUser(id)} finish={() => this.addUserComponent_finish()} close={() => this.addUserComponent_close()} /> : 
 				  <button onClick={() => this.setViewAddUserComponent(true)}>Add New User</button>}
 			  </div>
 			  <div>
@@ -77,13 +77,18 @@ class App extends React.Component {
 			</div>
         );
     }
+	
+	addUserComponent_finish() {
+		this.addUserComponent_close();
+		this.refresh();
+	}
+	
+	addUserComponent_close() {
+		this.setViewAddUserComponent(false);
+	}
   
     setViewAddUserComponent(isVisible) {
 	    this.setState({ viewAddUserComponent: isVisible });
-	    if (!isVisible) {
-			console.log("Refreshing");
-		    this.refresh();
-	    }
     }
 	
 	refresh() {
@@ -93,7 +98,6 @@ class App extends React.Component {
 	}
 	
 	updateUsersData(newData) {
-		console.log(newData);
 		let users = [];
 		newData.forEach(user => {
                 users.push({
@@ -118,8 +122,6 @@ class App extends React.Component {
 	}
 	
 	hasUser(id) {
-		console.log("hasUser called");
-		console.log(id);
 		return this.state.usersData.find(user => user['id'] === id) !== undefined;
 	}
 }

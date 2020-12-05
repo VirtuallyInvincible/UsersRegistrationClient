@@ -1,5 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './AddUserComponent.css';
+
+
+// TODO: Improve the style of this dialog.
+// TODO: The user should not be able to press Add before all mandatory fields have been filled
 
 
 class AddUserComponent extends React.Component {
@@ -11,26 +16,25 @@ class AddUserComponent extends React.Component {
   
     render() {
 		return (
-		// TODO: This div should be a form that validates the input fields. If not all fields have been entered, the request should fail.
-		// TODO: If the ID entered already exists in the database, an error message should be displayed
-			<div>
-			  <input ref='id' type='text' placeholder='ID' />
-			  <br />
-			  <input ref='name' type='text' placeholder='Name' />
-			  <br />
-			  <input ref='age' type='text' placeholder='Age' />
-			  <br />
-			  <input ref='jobTitle' type='text' placeholder='Job Title' />
-			  <br />
-			  <button onClick={this.add}>Add</button>
-		    </div>
+			<div className='popup'>
+			  <div className='popup_inner'>
+				<input ref='id' type='text' placeholder='ID' />
+				<br />
+				<input ref='name' type='text' placeholder='Name' />
+				<br />
+				<input ref='age' type='text' placeholder='Age' />
+				<br />
+				<input ref='jobTitle' type='text' placeholder='Job Title' />
+				<br />
+				<button onClick={this.add}>Add</button>
+				<button onClick={this.props.close}>Close</button>
+			  </div>
+			</div>
 		);
     }
   
     add() {
 		var id = ReactDOM.findDOMNode(this.refs.id).value;
-		console.log("calling hasUsaer with id: " + id);
-		console.log(this.props.hasUser(id));
 		if (this.props.hasUser(id) == true) {
 			console.log("hasUser is true");
 			alert("A user with this ID already exists.")
