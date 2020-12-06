@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import './AddUserComponent.css';
 
 
-// TODO: Improve the style of this dialog.
 // TODO: The user should not be able to press Add before all mandatory fields have been filled
 
 
@@ -18,16 +17,22 @@ class AddUserComponent extends React.Component {
 		return (
 			<div className='popup'>
 			  <div className='popup_inner'>
-				<input ref='id' type='text' placeholder='ID' />
-				<br />
-				<input ref='name' type='text' placeholder='Name' />
-				<br />
-				<input ref='age' type='text' placeholder='Age' />
-				<br />
-				<input ref='jobTitle' type='text' placeholder='Job Title' />
-				<br />
-				<button onClick={this.add}>Add</button>
-				<button onClick={this.props.close}>Close</button>
+			    <div className='popup_element'>
+				  <input ref='id' type='text' placeholder='ID' />
+				</div>
+				<div className='popup_element'>
+				  <input ref='name' type='text' placeholder='Name' />
+				</div>
+				<div className='popup_element'>
+				  <input ref='age' type='text' placeholder='Age' />
+				</div>
+				<div className='popup_element'>
+				  <input ref='jobTitle' type='text' placeholder='Job Title' />
+				</div>
+				<div className='popup_element'>
+				  <button onClick={this.add}>Add</button>
+				  <button onClick={this.props.close}>Close</button>
+			    </div>
 			  </div>
 			</div>
 		);
@@ -36,7 +41,6 @@ class AddUserComponent extends React.Component {
     add() {
 		var id = ReactDOM.findDOMNode(this.refs.id).value;
 		if (this.props.hasUser(id) == true) {
-			console.log("hasUser is true");
 			alert("A user with this ID already exists.")
 			return;
 		}
