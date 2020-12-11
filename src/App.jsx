@@ -43,10 +43,12 @@ class App extends React.Component {
 		
         return (
 			<div>
+			  <div style={{visibility: this.state.viewAddUserComponent ? 'visible' : 'hidden'}}>
+				<AddUserComponent hasUser={(id) => this.hasUser(id)} finish={() => this.addUserComponent_finish()} 
+								  close={() => this.addUserComponent_close()} />
+			  </div>
 			  <div>
-				{this.state.viewAddUserComponent ? 
-				  <AddUserComponent hasUser={(id) => this.hasUser(id)} finish={() => this.addUserComponent_finish()} close={() => this.addUserComponent_close()} /> : 
-				  <button onClick={() => this.setViewAddUserComponent(true)}>Add New User</button>}
+			    <button onClick={() => this.setViewAddUserComponent(true)}>Add New User</button>
 			  </div>
 			  <div>
 			    <table>
