@@ -1,11 +1,11 @@
 import React from 'react';
-import AddUserComponent from './AddUserComponent.jsx'
-import Constants from './constants.js'
+import AddUserComponent from './AddUserComponent.jsx';
+import Constants from './constants.js';
+import './App.css';
 
 
 // TODO: Detected problems with library installations. Code may work well on my machine but not compile on another. Advice using an IDE to include all the necessary libraries.
 // TODO: Moving to the cloud will help in scaling up the application as well as enabling remote clients (outside localhost) to send requests.
-// TODO: Add graphical design to the components.
 // TODO: Add ability to sort by clicking the headers. Add functionality for sorting to the API.
 
 
@@ -34,7 +34,7 @@ class App extends React.Component {
 				  <td>{userData.name}</td>
 				  <td>{userData.age}</td>
 				  <td>{userData.jobTitle}</td>
-				  <td>
+				  <td className='delete-button'>
 				    <button onClick={() => this.delete(userData.id)}>DELETE</button>
 				  </td>
 				</tr>
