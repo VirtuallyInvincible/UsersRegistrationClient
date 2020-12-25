@@ -2,9 +2,6 @@ import React from 'react';
 import './AddUserComponent.css';
 
 
-// TODO: Change the layout to use a <form> element. Check if possible to set fields as required. This can help in rendering the add button disabled if a required filled is empty, and then the logic can be simplified.
-
-
 const ID_FIELD_NAME = 'id';
 const NAME_FIELD_NAME = 'Name';
 const AGE_FIELD_NAME = 'Age';
@@ -15,46 +12,62 @@ class AddUserComponent extends React.Component {
 	constructor() {
 	    super();
 		
-		var initialFieldsToValues = {};
-		initialFieldsToValues[ID_FIELD_NAME] = '';
-		initialFieldsToValues[NAME_FIELD_NAME] = '';
-		initialFieldsToValues[AGE_FIELD_NAME] = '';
-		initialFieldsToValues[JOB_TITLE_FIELD_NAME] = '';
-		this.state = {
-			fieldsToValues: initialFieldsToValues
-		}
-		
-		this.add = this.add.bind(this);
+		this.submit = this.submit.bind(this);
+		this.close = this.close.bind(this);
 		this.valueChanged = this.valueChanged.bind(this);
+		
+		this.state = {
+			fieldsToValues: undefined,
+			editMode: false,
+			submitButtonText: ''
+		};
     }
 	
-  
+	static getDerivedStateFromProps(props, state) {
+		if (state.fieldsToValues !== undefined) {
+			return state;
+		}
+		
+		var editedUser = props.getEditedUser();
+		var editMode = editedUser !== undefined;
+		var initialFieldsToValues = {};
+		initialFieldsToValues[ID_FIELD_NAME] = editMode ? editedUser.id : '';
+		initialFieldsToValues[NAME_FIELD_NAME] = editMode ? editedUser.name : '';
+		initialFieldsToValues[AGE_FIELD_NAME] = editMode ? editedUser.age : '';
+		initialFieldsToValues[JOB_TITLE_FIELD_NAME] = editMode ? editedUser.jobTitle : '';
+		return {
+			fieldsToValues: initialFieldsToValues,
+			editMode: editMode,
+			submitButtonText: editMode ? 'Edit' : 'Add'
+		};
+	}
+    
     render() {
 		return (
-			<div className='popup'>
+			<div className='popup' onSubmit={this.add} noValidate>
 			  <div className='popup_inner'>
 			    <div className='popup_element'>
-				  <input onChange={this.valueChanged} id={ID_FIELD_NAME} type='text' placeholder='ID' />
+				  <input disabled={this.state.editMode} onChange={this.valueChanged} id={ID_FIELD_NAME} type='text' value={this.state.fieldsToValues[ID_FIELD_NAME]} placeholder='ID' />
 				</div>
 				<div className='popup_element'>
-				  <input onChange={this.valueChanged} id={NAME_FIELD_NAME} type='text' placeholder='Name' />
+				  <input onChange={this.valueChanged} id={NAME_FIELD_NAME} type='text' value={this.state.fieldsToValues[NAME_FIELD_NAME]} placeholder='Name' />
 				</div>
 				<div className='popup_element'>
-				  <input onChange={this.valueChanged} id={AGE_FIELD_NAME} type='text' placeholder='Age' />
+				  <input onChange={this.valueChanged} id={AGE_FIELD_NAME} type='text' value={this.state.fieldsToValues[AGE_FIELD_NAME]} placeholder='Age' />
 				</div>
 				<div className='popup_element'>
-				  <input onChange={this.valueChanged} id={JOB_TITLE_FIELD_NAME} type='text' placeholder='Job Title' />
+				  <input onChange={this.valueChanged} id={JOB_TITLE_FIELD_NAME} type='text' value={this.state.fieldsToValues[JOB_TITLE_FIELD_NAME]} placeholder='Job Title' />
 				</div>
 				<div className='popup_element'>
-				  <button onClick={this.add}>Add</button>
-				  <button onClick={this.props.close}>Close</button>
+				  <button onClick={this.submit}>{this.state.submitButtonText}</button>
+				  <button onClick={this.close}>Close</button>
 			    </div>
 			  </div>
 			</div>
 		);
     }
   
-    add() {
+    submit() {
 		if (!this.validateData()) {
 			return;
 		}
@@ -65,10 +78,15 @@ class AddUserComponent extends React.Component {
 		    body: JSON.stringify(this.state.fieldsToValues)
 		};
 		fetch(`http://localhost:27017/user`, requestOptions)
-		    .catch(console.log);
-		
-		this.props.finish();
+		    .then(() => {
+				this.props.finish();
+			})
+			.catch(console.log);
     }
+	
+	close() {
+		this.props.close();
+	}
 	
 	validateData() {
 		var id = this.state.fieldsToValues[ID_FIELD_NAME];
@@ -82,12 +100,12 @@ class AddUserComponent extends React.Component {
 			return false;
 		}
 		
-		if (this.props.hasUser(id) === true) {
+		if (!this.state.editMode && this.props.hasUser(id) === true) {
 			alert("A user with this ID already exists.")
 			return false;
 		}
 		
-		// Other validation criteria go here...
+		// Other validation criteria...
 		
 		return true;
 	}

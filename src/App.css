@@ -8,13 +8,12 @@ table {
 }
 
 th, td {
-  width: 20%;
   text-align: left;
   padding: 0.5em;
   margin: 0;
 }
 
-.delete-button {
+.user-list-button {
   margin: auto;
   text-align: center;
 }
