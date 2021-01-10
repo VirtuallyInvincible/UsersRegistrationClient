@@ -4,9 +4,8 @@ import UsersListComponent from './UsersListComponent.jsx';
 import './App.css';
 
 
-// TODO: Detected problems with library installations. Code may work well on my machine but not compile on another. Advice using an IDE to include all the necessary libraries.
 // TODO: Moving to the cloud will help in scaling up the application as well as enabling remote clients (outside localhost) to send requests.
-// TODO: Add ability to sort by clicking the headers. Add functionality for sorting to the API.
+// TODO: Add ability to sort by clicking the headers.
 
 
 class App extends React.Component {
