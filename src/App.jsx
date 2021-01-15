@@ -2,9 +2,11 @@ import React from 'react';
 import AddUserComponent from './AddUserComponent.jsx';
 import UsersListComponent from './UsersListComponent.jsx';
 import './App.css';
+import { DataGrid } from '@material-ui/data-grid';
 
 
 // TODO: Moving to the cloud will help in scaling up the application as well as enabling remote clients (outside localhost) to send requests.
+// TODO: Integrate Material Design by using Data Grid
 // TODO: Add ability to sort by clicking the headers.
 
 
