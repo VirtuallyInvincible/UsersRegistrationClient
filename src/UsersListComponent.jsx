@@ -38,7 +38,7 @@ class UsersListComponent extends React.Component {
 				</tr>
 			)
 		});
-		
+
 		return (
 			<div>
 			  <table>

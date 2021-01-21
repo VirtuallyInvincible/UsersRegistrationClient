@@ -2,14 +2,9 @@ import React from 'react';
 import AddUserComponent from './AddUserComponent.jsx';
 import UsersListComponent from './UsersListComponent.jsx';
 import './App.css';
-import { DataGrid } from '@material-ui/data-grid';
 
 
-// TODO: Moving to the cloud will help in scaling up the application as well as enabling remote clients (outside localhost) to send requests.
-// TODO: Integrate Material Design by using Data Grid
-// TODO: Add ability to sort by clicking the headers.
-
-
+// Note: Must run npm start before running from Visual Studio
 class App extends React.Component {
 	constructor() {
 		super();
@@ -21,7 +16,7 @@ class App extends React.Component {
 		this.setViewAddUserComponent = this.setViewAddUserComponent.bind(this);
     }
   
-    render() {
+    render() {		  
 		let content = <div>
 					    <div>
 						  <button onClick={() => this.setViewAddUserComponent(true)}>Add New User</button>
